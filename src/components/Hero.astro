@@ -10,6 +10,7 @@ import { url } from '../lib/path';
     <div class="hero__glow hero__glow--1" data-parallax="-18"></div>
     <div class="hero__glow hero__glow--2" data-parallax="22"></div>
     <div class="hero__grid"></div>
+    <div class="hero__spotlight"></div>
     <div class="hero__grain"></div>
   </div>
 
@@ -21,8 +22,16 @@ import { url } from '../lib/path';
 
       <h1 class="hero__title">
         <span class="hero__line" data-hero-line><span>L'emballage PET</span></span>
-        <span class="hero__line" data-hero-line><span>durable, <em class="gradient-text">fabriqué</em></span></span>
-        <span class="hero__line" data-hero-line><span>au Burundi.</span></span>
+        <span class="hero__line hero__line--rotate" data-hero-line>
+          <span class="sr-only">durable</span>
+          <span class="hero__rotator" data-rotator aria-hidden="true">
+            <span class="hero__rot gradient-text is-active">durable</span>
+            <span class="hero__rot gradient-text">recyclé</span>
+            <span class="hero__rot gradient-text">local</span>
+            <span class="hero__rot gradient-text">abordable</span>
+          </span>
+        </span>
+        <span class="hero__line" data-hero-line><span>fabriqué au Burundi.</span></span>
       </h1>
 
       <p class="lead hero__sub" data-hero-sub>
@@ -55,6 +64,10 @@ import { url } from '../lib/path';
 
     <div class="hero__art" data-hero-art>
       <div class="hero__art-ring" aria-hidden="true"></div>
+      <div class="hero__orbit" aria-hidden="true"></div>
+      <span class="hero__dot hero__dot--1" aria-hidden="true"></span>
+      <span class="hero__dot hero__dot--2" aria-hidden="true"></span>
+      <span class="hero__dot hero__dot--3" aria-hidden="true"></span>
       <svg class="hero__bottle" viewBox="0 0 220 420" role="img"
         aria-label="Illustration d'une bouteille PET et d'un cycle de recyclage">
         <defs>
@@ -112,7 +125,10 @@ import { url } from '../lib/path';
   .hero {
     position: relative;
     overflow: hidden;
-    padding-block: clamp(3rem, 7vw, 6rem) clamp(4rem, 8vw, 7rem);
+    min-height: min(100svh, 880px);
+    display: flex;
+    align-items: center;
+    padding-block: clamp(5rem, 9vw, 7rem) clamp(4rem, 8vw, 7rem);
     isolation: isolate;
   }
   .hero__bg {
@@ -177,11 +193,50 @@ import { url } from '../lib/path';
     50% { opacity: 0.78; }
   }
 
+  .hero__spotlight {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle 440px at var(--mx, 72%) var(--my, 32%), rgba(244, 97, 4, 0.2), transparent 55%);
+    transition: background 0.18s linear;
+  }
+
   .hero__inner {
     display: grid;
     gap: 2rem;
     align-items: center;
     grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  /* Rotating keyword */
+  .hero__line--rotate {
+    overflow: visible;
+  }
+  .hero__rotator {
+    position: relative;
+    display: inline-block;
+    height: 1em;
+    line-height: 1;
+    vertical-align: top;
+    min-width: 7ch;
+  }
+  .hero__rot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(0.55em);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+    will-change: transform, opacity;
+  }
+  .hero__rot.is-active {
+    opacity: 1;
+    transform: none;
+  }
+  .hero__rot.is-out {
+    opacity: 0;
+    transform: translateY(-0.55em);
   }
   .hero__chip {
     background: rgba(255, 125, 26, 0.14);
@@ -258,6 +313,37 @@ import { url } from '../lib/path';
     border-radius: 50%;
     background: var(--ink);
   }
+  .hero__orbit {
+    position: absolute;
+    width: min(440px, 94%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 154, 61, 0.35);
+    animation: spin 42s linear infinite reverse;
+  }
+  .hero__orbit::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--green-bright);
+    box-shadow: 0 0 16px rgba(255, 154, 61, 0.9);
+    transform: translateX(-50%);
+  }
+  .hero__dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--grad);
+    box-shadow: 0 0 16px rgba(244, 97, 4, 0.6);
+  }
+  .hero__dot--1 { top: 16%; left: 14%; animation: float 5s ease-in-out infinite; }
+  .hero__dot--2 { bottom: 20%; right: 12%; width: 7px; height: 7px; animation: float 6s ease-in-out infinite 0.5s; }
+  .hero__dot--3 { top: 52%; right: 4%; width: 5px; height: 5px; animation: float 4.5s ease-in-out infinite 0.8s; }
   .hero__bottle {
     position: relative;
     width: clamp(160px, 42vw, 230px);
@@ -321,7 +407,7 @@ import { url } from '../lib/path';
   }
   @media (prefers-reduced-motion: reduce) {
     .hero__bottle, .hero__preform, .hero__rec, .hero__art-ring, .hero__scroll span,
-    .hero__aurora, .hero__glow--1, .hero__glow--2 { animation: none; }
+    .hero__aurora, .hero__glow--1, .hero__glow--2, .hero__orbit, .hero__dot { animation: none; }
   }
 
   @media (min-width: 900px) {

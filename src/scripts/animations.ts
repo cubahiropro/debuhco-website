@@ -128,6 +128,51 @@ function initTilt() {
   });
 }
 
+/** Hero: cycle the rotating keyword with a vertical slide. */
+function initHeroRotator() {
+  const rot = document.querySelector<HTMLElement>('[data-rotator]');
+  if (!rot) return;
+  const words = Array.from(rot.querySelectorAll<HTMLElement>('.hero__rot'));
+  if (words.length < 2) return;
+  let i = 0;
+  setInterval(() => {
+    const cur = words[i];
+    i = (i + 1) % words.length;
+    const next = words[i];
+    cur.classList.remove('is-active');
+    cur.classList.add('is-out');
+    next.classList.remove('is-out');
+    next.classList.add('is-active');
+    window.setTimeout(() => cur.classList.remove('is-out'), 600);
+  }, 2400);
+}
+
+/** Hero: cursor-following spotlight + subtle mouse parallax on the art. */
+function initHeroInteractions() {
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (!hero || !window.matchMedia('(pointer: fine)').matches) return;
+  const art = hero.querySelector<HTMLElement>('[data-hero-art]');
+  const xTo = art ? gsap.quickTo(art, 'x', { duration: 0.6, ease: 'power3.out' }) : null;
+  const yTo = art ? gsap.quickTo(art, 'y', { duration: 0.6, ease: 'power3.out' }) : null;
+  hero.addEventListener('mousemove', (e) => {
+    const r = hero.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    hero.style.setProperty('--mx', `${px * 100}%`);
+    hero.style.setProperty('--my', `${py * 100}%`);
+    if (xTo && yTo) {
+      xTo((px - 0.5) * 38);
+      yTo((py - 0.5) * 38);
+    }
+  });
+  hero.addEventListener('mouseleave', () => {
+    if (xTo && yTo) {
+      xTo(0);
+      yTo(0);
+    }
+  });
+}
+
 /** Big headings that wipe up behind a mask when scrolled into view. */
 function initHeadingWipe() {
   gsap.utils.toArray<HTMLElement>('[data-wipe]').forEach((el) => {
@@ -158,6 +203,8 @@ function boot() {
   initMagnetic();
   initTilt();
   initHeadingWipe();
+  initHeroRotator();
+  initHeroInteractions();
   ScrollTrigger.refresh();
 }
 
