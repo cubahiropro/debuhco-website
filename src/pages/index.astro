@@ -52,7 +52,7 @@ const productIcons: Record<string, string> = {
       <div class="stats grid grid--4">
         {
           stats.map((s, i) => (
-            <div class="stat card" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+            <div class="stat card" data-reveal data-tilt="4" style={`--reveal-delay:${i * 90}ms`}>
               <div class="stat__num">
                 <span data-count={s.value}>0</span>{s.suffix}
               </div>
@@ -62,6 +62,19 @@ const productIcons: Record<string, string> = {
           ))
         }
       </div>
+    </div>
+  </section>
+
+  <!-- Kinetic statement band -->
+  <section class="kinetic dark" aria-hidden="true" data-marquee>
+    <div class="kinetic__track" data-marquee-inner>
+      <span class="kinetic__item">
+        <span class="kinetic__word">Préformes</span><span class="kinetic__dot">◆</span>
+        <span class="kinetic__word kinetic__word--outline">Bouteilles PET</span><span class="kinetic__dot">◆</span>
+        <span class="kinetic__word">Bouchons</span><span class="kinetic__dot">◆</span>
+        <span class="kinetic__word kinetic__word--outline">Recyclage</span><span class="kinetic__dot">◆</span>
+        <span class="kinetic__word">Made in Burundi</span><span class="kinetic__dot">◆</span>
+      </span>
     </div>
   </section>
 
@@ -88,7 +101,7 @@ const productIcons: Record<string, string> = {
         <ul class="why__list">
           {
             differentiators.map((d, i) => (
-              <li class="why__item card" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <li class="why__item card" data-reveal data-tilt="5" style={`--reveal-delay:${i * 80}ms`}>
                 <span class="why__index">0{i + 1}</span>
                 <div>
                   <h3 class="why__title">{d.title}</h3>
@@ -115,7 +128,7 @@ const productIcons: Record<string, string> = {
       <div class="grid grid--4 products__grid">
         {
           products.map((p, i) => (
-            <article class="product card" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+            <article class="product card" data-reveal data-tilt="5" style={`--reveal-delay:${i * 80}ms`}>
               <span class="product__icon"><Icon name={productIcons[p.id]} size={22} /></span>
               <h3 class="product__name">{p.name}</h3>
               <p class="product__summary">{p.summary}</p>
@@ -224,7 +237,7 @@ const productIcons: Record<string, string> = {
       <div class="grid grid--3 impact__grid">
         {
           impacts.map((im, i) => (
-            <article class="impact card" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+            <article class="impact card" data-reveal data-tilt="5" style={`--reveal-delay:${i * 90}ms`}>
               <span class="impact__icon"><Icon name={impactIcons[im.key]} size={24} /></span>
               <h3 class="impact__title">{im.title}</h3>
               <ul class="impact__points">
@@ -270,7 +283,7 @@ const productIcons: Record<string, string> = {
           préformes, bouchons et bouteilles fiables, à prix compétitif et sans délais d'importation.
         </p>
         <div class="cta__actions">
-          <a href={url("/contact")} class="btn btn--primary">Demander un devis <Icon name="arrow-right" size={18} /></a>
+          <a href={url("/contact")} class="btn btn--primary" data-magnetic="0.4">Demander un devis <Icon name="arrow-right" size={18} /></a>
           <a href={`mailto:${company.email}`} class="btn btn--ghost">{company.email}</a>
         </div>
       </div>

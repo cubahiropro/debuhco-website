@@ -234,6 +234,26 @@ ul {
   transition: transform 0.35s var(--ease);
 }
 
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* Light sweep on hover */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.28) 50%, transparent 80%);
+  transform: translateX(-130%);
+  transition: transform 0.7s var(--ease);
+  pointer-events: none;
+}
+.btn:hover::after {
+  transform: translateX(130%);
+}
+
 .btn:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
@@ -498,6 +518,66 @@ ul {
 .illu--sm {
   max-width: 180px;
   margin-inline: auto;
+}
+
+/* ---------- Kinetic marquee band (oversized scrolling statement) ---------- */
+.kinetic {
+  overflow: hidden;
+  border-block: 1px solid var(--line-on-dark);
+  padding-block: clamp(1.2rem, 3vw, 2.4rem);
+}
+.kinetic__track {
+  display: flex;
+  width: max-content;
+  gap: 3rem;
+  white-space: nowrap;
+  will-change: transform;
+}
+.kinetic__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 3rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  font-size: clamp(2.2rem, 7vw, 5.5rem);
+  line-height: 1;
+}
+/* Alternate solid / outline words for depth */
+.kinetic__word {
+  color: var(--text-on-dark);
+}
+.kinetic__word--outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--green-bright);
+  text-stroke: 1.5px var(--green-bright);
+}
+.kinetic__dot {
+  color: var(--green-bright);
+}
+
+/* ---------- Card sheen + glow on tilt-enabled cards ---------- */
+[data-tilt] {
+  position: relative;
+  transition: box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+[data-tilt]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 90% at 50% -10%, rgba(244, 97, 4, 0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
+[data-tilt]:hover::after {
+  opacity: 1;
+}
+/* Once revealed, stop transitioning transform so GSAP tilt stays smooth. */
+.js [data-reveal].is-in[data-tilt] {
+  transition: box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
 }
 
 /* Bulleted check list used beside illustrations. */

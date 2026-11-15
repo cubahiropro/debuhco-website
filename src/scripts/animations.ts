@@ -93,6 +93,53 @@ function initMarquee() {
   });
 }
 
+/** Magnetic buttons/links: gently pull toward the cursor (fine pointers only). */
+function initMagnetic() {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
+    const strength = parseFloat(el.dataset.magnetic || '0.35');
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width / 2);
+      const y = e.clientY - (r.top + r.height / 2);
+      gsap.to(el, { x: x * strength, y: y * strength, duration: 0.5, ease: 'power3.out' });
+    };
+    const reset = () => gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', reset);
+  });
+}
+
+/** Subtle 3D tilt on cards (fine pointers only). */
+function initTilt() {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
+    const max = parseFloat(el.dataset.tilt || '6');
+    el.style.transformStyle = 'preserve-3d';
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      gsap.to(el, { rotateY: px * max, rotateX: -py * max, duration: 0.4, ease: 'power2.out', transformPerspective: 800 });
+    };
+    const reset = () => gsap.to(el, { rotateX: 0, rotateY: 0, duration: 0.6, ease: 'power3.out' });
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', reset);
+  });
+}
+
+/** Big headings that wipe up behind a mask when scrolled into view. */
+function initHeadingWipe() {
+  gsap.utils.toArray<HTMLElement>('[data-wipe]').forEach((el) => {
+    gsap.from(el, {
+      yPercent: 115,
+      duration: 1,
+      ease: 'power4.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+    });
+  });
+}
+
 function boot() {
   if (prefersReduced) {
     revealAll();
@@ -108,6 +155,9 @@ function boot() {
   initParallax();
   animateCounters();
   initMarquee();
+  initMagnetic();
+  initTilt();
+  initHeadingWipe();
   ScrollTrigger.refresh();
 }
 
