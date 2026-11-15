@@ -1,0 +1,156 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/path';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import { processSteps } from '../data/site';
+
+const pillars = [
+  {
+    icon: 'recycle',
+    title: 'Recyclage & économie circulaire',
+    text: 'Collecte, tri, broyage, lavage et extrusion des bouteilles usagées en granulés recyclés réintégrés à la production. Objectif : 70 % de PET recyclé dans le mix matière.',
+  },
+  {
+    icon: 'droplet',
+    title: 'Gestion responsable de l\'eau',
+    text: 'Traitement écologique des eaux usées issues du lavage des bouteilles recyclées et optimisation des circuits de refroidissement des équipements.',
+  },
+  {
+    icon: 'sun',
+    title: 'Énergie & empreinte carbone',
+    text: 'Machines à meilleure efficacité énergétique, étude d\'une alimentation solaire du site et optimisation des itinéraires de transport pour réduire les émissions de CO₂.',
+  },
+  {
+    icon: 'leaf',
+    title: 'Réduction de la pollution plastique',
+    text: 'Récupération des chutes de production, programme de retour des bouteilles et sensibilisation des communautés, écoles et partenaires au tri sélectif.',
+  },
+];
+
+const collectionCities = ['Bujumbura', 'Gitega', 'Ngozi', 'Rumonge'];
+---
+
+<Base
+  title="Durabilité"
+  description="Économie circulaire, recyclage du PET, gestion de l'eau et de l'énergie : la démarche environnementale de DEBUHCO au Burundi."
+>
+  <PageHero
+    eyebrow="Durabilité"
+    title="Transformer un défi environnemental en opportunité."
+    text="Les déchets plastiques du Burundi sont aujourd'hui mal gérés. DEBUHCO structure une filière de collecte et de recyclage qui redonne de la valeur à ces bouteilles usagées."
+  />
+
+  <!-- Pillars -->
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--2 pillars">
+        {
+          pillars.map((p, i) => (
+            <article class="pillar card" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <span class="pillar__icon"><Icon name={p.icon} size={24} /></span>
+              <h2 class="pillar__title">{p.title}</h2>
+              <p class="pillar__text">{p.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Circular loop -->
+  <section class="section dark">
+    <div class="container">
+      <SectionHeading eyebrow="La boucle circulaire" title="Du déchet à la nouvelle bouteille, cinq étapes." dark align="center" max="24ch" />
+      <ol class="loop">
+        {
+          processSteps.map((s, i) => (
+            <li class="loop__step" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <span class="loop__n gradient-text">{s.n}</span>
+              <h3 class="loop__title">{s.title}</h3>
+              <p class="loop__text">{s.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Material figure -->
+  <section class="section" style="padding-bottom:0">
+    <div class="container">
+      <figure class="gfig duo" data-reveal>
+        <img src={url("/images/granules.jpg")} alt="Granulés de PET, matière première de la production" loading="lazy" decoding="async" width="1280" height="960" />
+        <figcaption class="gfig__cap">Des granulés — vierges ou issus du recyclage — à la base de chaque préforme.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Collection network -->
+  <section class="section">
+    <div class="container">
+      <div class="collect">
+        <div data-reveal>
+          <SectionHeading eyebrow="Réseau de collecte" title="Des centres de collecte dans les grandes villes." max="22ch">
+            <p class="lead">
+              En partenariat avec les entreprises, les municipalités et des collecteurs
+              indépendants, DEBUHCO met en place un réseau de récupération des bouteilles
+              usagées pour alimenter la ligne de recyclage.
+            </p>
+          </SectionHeading>
+          <ul class="collect__cities">
+            {collectionCities.map((c) => (
+              <li class="chip"><Icon name="map-pin" size={15} /> {c}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="collect__facts" data-reveal style="--reveal-delay:120ms">
+          <div class="fact">
+            <span class="fact__num gradient-text">0,50&nbsp;€<small>/kg</small></span>
+            <p>PET recyclé (mix qualité) contre ~1,30&nbsp;€/kg pour le PET vierge.</p>
+          </div>
+          <hr class="divider" />
+          <div class="fact">
+            <span class="fact__num gradient-text">47,5&nbsp;t</span>
+            <p>de matière PEHD/PP par an pour les bouchons, recyclable elle aussi.</p>
+          </div>
+          <hr class="divider" />
+          <div class="fact">
+            <span class="fact__num gradient-text">1 058&nbsp;t</span>
+            <p>de PET transformées par an, en priorité issues du recyclage.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pillar { display: flex; flex-direction: column; }
+  .pillar:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: transparent; }
+  .pillar__icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--grad-soft); color: var(--green-deep); margin-bottom: 1.1rem; }
+  .pillar__title { font-size: var(--step-1); }
+  .pillar__text { color: var(--muted); margin-top: 0.6rem; }
+
+  .loop { display: grid; gap: 1.2rem; margin-top: 3rem; }
+  .loop__step { padding: 1.5rem; border: 1px solid var(--line-on-dark); border-radius: var(--radius); background: rgba(255,255,255,0.02); }
+  .loop__n { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; }
+  .loop__title { margin-top: 0.5rem; font-size: 1.1rem; }
+  .loop__text { margin-top: 0.4rem; color: var(--muted-on-dark); font-size: 0.92rem; }
+  @media (min-width: 720px) { .loop { grid-template-columns: repeat(5, 1fr); } }
+
+  .collect { display: grid; gap: 2.6rem; align-items: center; }
+  .collect__cities { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.6rem; }
+  .collect__facts { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: clamp(1.6rem, 3vw, 2.4rem); }
+  .fact { display: flex; flex-direction: column; gap: 0.4rem; }
+  .fact__num { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1; }
+  .fact__num small { font-size: 1rem; font-weight: 500; }
+  .fact p { color: var(--muted); font-size: 0.95rem; }
+  .divider { margin: 1.3rem 0; }
+  @media (min-width: 900px) { .collect { grid-template-columns: 1.1fr 0.9fr; } }
+
+  .gfig { border-radius: var(--radius-lg); aspect-ratio: 16 / 7; }
+  .gfig img { position: absolute; inset: 0; }
+  .gfig__cap { position: absolute; z-index: 2; left: 0; bottom: 0; padding: 1.1rem 1.4rem; color: var(--text-on-dark); font-family: var(--font-head); font-weight: 600; font-size: 0.9rem; max-width: 40ch; }
+</style>

@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/path';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+
+const images = [
+  {
+    file: 'preforms.jpg',
+    title: 'Préformes PET',
+    author: '01x07x2022000',
+    license: 'CC0 1.0 (domaine public)',
+    source: 'https://commons.wikimedia.org/wiki/File:20220807_PET_preform_3.jpg',
+  },
+  {
+    file: 'injection.jpg',
+    title: 'Machine de moulage par injection',
+    author: 'The robotic engineer1',
+    license: 'CC BY-SA 4.0',
+    source: 'https://commons.wikimedia.org/wiki/File:Injection_Molding_Machine_with_a_robot_arm.jpg',
+  },
+  {
+    file: 'granules.jpg',
+    title: 'Granulés de plastique',
+    author: 'Rohini',
+    license: 'CC BY-SA 3.0',
+    source: 'https://commons.wikimedia.org/wiki/File:Uncolored_plastic_granules.jpg',
+  },
+];
+---
+
+<Base
+  title="Crédits"
+  description="Crédits et licences des images utilisées sur le site DEBUHCO."
+>
+  <PageHero
+    eyebrow="Crédits"
+    title="Crédits & licences des images."
+    text="Les photographies illustratives proviennent de Wikimedia Commons et sont réutilisées conformément à leurs licences. Elles ne représentent pas les installations réelles de DEBUHCO."
+  />
+
+  <section class="section">
+    <div class="container">
+      <ul class="credits">
+        {
+          images.map((im) => (
+            <li class="credit card" data-reveal>
+              <div class="credit__thumb duo">
+                <img src={url(`/images/${im.file}`)} alt={im.title} loading="lazy" decoding="async" width="400" height="260" />
+              </div>
+              <div class="credit__body">
+                <h2 class="credit__title">{im.title}</h2>
+                <dl class="credit__meta">
+                  <div><dt>Auteur</dt><dd>{im.author}</dd></div>
+                  <div><dt>Licence</dt><dd>{im.license}</dd></div>
+                </dl>
+                <a class="credit__link" href={im.source} target="_blank" rel="noopener noreferrer">
+                  Source sur Wikimedia Commons <Icon name="arrow-up-right" size={15} />
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="credits__note">
+        Les illustrations vectorielles, icônes et le reste de l'interface ont été créés
+        spécifiquement pour DEBUHCO. Les données chiffrées proviennent du plan d'affaires
+        officiel de la société.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .credits { display: grid; gap: 1.2rem; }
+  .credit { display: grid; gap: 1.4rem; align-items: center; }
+  .credit__thumb { border-radius: var(--radius); aspect-ratio: 16 / 10; }
+  .credit__thumb img { position: absolute; inset: 0; }
+  .credit__title { font-size: var(--step-1); }
+  .credit__meta { display: flex; gap: 2rem; margin-top: 0.8rem; flex-wrap: wrap; }
+  .credit__meta dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .credit__meta dd { margin: 0.15rem 0 0; font-weight: 600; font-family: var(--font-head); }
+  .credit__link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1rem; color: var(--green-deep); font-weight: 600; font-size: 0.9rem; }
+  .credit__link:hover { color: var(--green); }
+  .credits__note { margin-top: 2rem; color: var(--muted); font-size: 0.92rem; max-width: 70ch; }
+  @media (min-width: 680px) { .credit { grid-template-columns: 260px 1fr; } }
+</style>

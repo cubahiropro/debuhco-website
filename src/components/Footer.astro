@@ -1,0 +1,160 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { company, nav } from '../data/site';
+import { url } from '../lib/path';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer dark">
+  <div class="container container--wide">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <Logo mono />
+        <p class="site-footer__pitch">{company.baseline}</p>
+        <div class="site-footer__social" aria-label="Réseaux sociaux">
+          <a href={company.social.linkedin} aria-label="LinkedIn"><Icon name="linkedin" size={19} /></a>
+          <a href={company.social.facebook} aria-label="Facebook"><Icon name="facebook" size={19} /></a>
+          <a href={company.social.instagram} aria-label="Instagram"><Icon name="instagram" size={19} /></a>
+        </div>
+      </div>
+
+      <div class="site-footer__col">
+        <h3 class="site-footer__h">Navigation</h3>
+        <ul>
+          {nav.map((i) => <li><a href={url(i.href)}>{i.label}</a></li>)}
+        </ul>
+      </div>
+
+      <div class="site-footer__col">
+        <h3 class="site-footer__h">Contact</h3>
+        <ul class="site-footer__contact">
+          <li>
+            <Icon name="map-pin" size={18} />
+            <span>{company.address.line1}<br />{company.address.line2}, {company.address.city}<br />{company.address.country}</span>
+          </li>
+          <li>
+            <Icon name="mail" size={18} />
+            <a href={`mailto:${company.email}`}>{company.email}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="site-footer__col">
+        <h3 class="site-footer__h">Société</h3>
+        <ul class="site-footer__legal">
+          <li>{company.legal.form}</li>
+          <li>NIF&nbsp;: {company.legal.nif}</li>
+          <li>RC&nbsp;: {company.legal.rc}</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="site-footer__rule" />
+
+    <div class="site-footer__bottom">
+      <p>© {year} {company.legalName}. Tous droits réservés. · <a href={url("/credits")}>Crédits</a></p>
+      <p class="site-footer__made">
+        <span class="dot" aria-hidden="true"></span> Fièrement conçu au Burundi
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: clamp(3.5rem, 6vw, 5.5rem) 2rem;
+  }
+  .site-footer__top {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: 1fr;
+  }
+  .site-footer__brand {
+    max-width: 34ch;
+  }
+  .site-footer__pitch {
+    margin-top: 1rem;
+    color: var(--muted-on-dark);
+    font-size: 0.98rem;
+  }
+  .site-footer__social {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1.4rem;
+  }
+  .site-footer__social a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--line-on-dark);
+    border-radius: 11px;
+    color: var(--text-on-dark);
+    transition: background 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .site-footer__social a:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--green-bright);
+    transform: translateY(-2px);
+  }
+  .site-footer__h {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-bright);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .site-footer__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    color: var(--muted-on-dark);
+    font-size: 0.96rem;
+  }
+  .site-footer__col a:hover {
+    color: var(--text-on-dark);
+  }
+  .site-footer__contact li,
+  .site-footer__contact li span {
+    display: flex;
+    gap: 0.6rem;
+    line-height: 1.45;
+  }
+  .site-footer__contact svg {
+    flex: none;
+    margin-top: 2px;
+    color: var(--green-bright);
+  }
+  .site-footer__rule {
+    border: 0;
+    height: 1px;
+    background: var(--line-on-dark);
+    margin: 2.5rem 0 1.4rem;
+  }
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.8rem;
+    color: var(--muted-on-dark);
+    font-size: 0.88rem;
+  }
+  .site-footer__made {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--grad);
+  }
+  @media (min-width: 680px) {
+    .site-footer__top {
+      grid-template-columns: 1.5fr 1fr 1.4fr 1fr;
+    }
+  }
+</style>

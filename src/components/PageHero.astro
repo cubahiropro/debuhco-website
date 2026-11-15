@@ -1,0 +1,55 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  eyebrow: string;
+  title: string;
+  text?: string;
+}
+import { url } from '../lib/path';
+const { eyebrow, title, text } = Astro.props;
+---
+
+<section class="page-hero dark">
+  <div class="page-hero__bg" aria-hidden="true">
+    <div class="page-hero__glow"></div>
+    <div class="page-hero__grid"></div>
+  </div>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <a href={url("/")}>Accueil</a>
+      <Icon name="arrow-right" size={13} />
+      <span>{eyebrow}</span>
+    </nav>
+    <h1 class="page-hero__title" data-reveal>{title}</h1>
+    {text && <p class="lead page-hero__text" data-reveal style="--reveal-delay:120ms">{text}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3rem, 6vw, 5rem);
+    isolation: isolate;
+  }
+  .page-hero__bg { position: absolute; inset: 0; z-index: -1; }
+  .page-hero__glow {
+    position: absolute; width: 480px; height: 480px; top: -200px; right: -60px; border-radius: 50%;
+    filter: blur(80px); background: radial-gradient(circle, rgba(21,195,122,0.45), transparent 70%);
+  }
+  .page-hero__grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: radial-gradient(ellipse 70% 80% at 70% 20%, #000 40%, transparent 100%);
+  }
+  .breadcrumb {
+    display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;
+    color: var(--muted-on-dark); font-family: var(--font-display); margin-bottom: 1.4rem;
+  }
+  .breadcrumb a:hover { color: var(--green-bright); }
+  .breadcrumb svg { color: var(--green-bright); opacity: 0.7; }
+  .page-hero__title { font-size: var(--step-4); max-width: 20ch; }
+  .page-hero__text { margin-top: 1.4rem; color: var(--muted-on-dark); }
+</style>

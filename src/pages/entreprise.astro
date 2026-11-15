@@ -1,0 +1,185 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import { company, markets } from '../data/site';
+
+const timeline = [
+  { period: 'Mars – Mai 2025', title: 'Étude & business plan', text: 'Étude de faisabilité, validation technique et planification stratégique.' },
+  { period: 'Mai – Octobre 2025', title: 'Équipements de recyclage', text: 'Acquisition des broyeurs, laveuses et sécheuses pour bouteilles récupérées.' },
+  { period: '2025 – 2026', title: 'Lignes de production', text: 'Installation des machines d\'injection des préformes et bouchons, puis de soufflage.' },
+  { period: 'À partir de juillet 2025', title: 'Approvisionnement', text: 'Granulés PET importés et bouteilles récupérées localement, en continu.' },
+  { period: 'Août – Octobre 2025', title: 'Tests & qualité', text: 'Contrôle des préformes, bouteilles et bouchons, conformité aux normes.' },
+  { period: 'Nov. 2025 – Avril 2026', title: 'Lancement officiel', text: 'Développement commercial, distribution et négociation avec les clients.' },
+];
+
+const values = [
+  { icon: 'leaf', title: 'Durabilité', text: 'Le recyclage et l\'économie circulaire au cœur du modèle industriel.' },
+  { icon: 'users', title: 'Inclusion', text: 'Emplois, formation et opportunités pour les jeunes et les femmes.' },
+  { icon: 'shield-check', title: 'Qualité', text: 'Maîtrise de bout en bout, de la matière première au produit étiqueté.' },
+  { icon: 'globe', title: 'Ancrage régional', text: 'Un acteur burundais tourné vers la sous-région Est-africaine.' },
+];
+---
+
+<Base
+  title="Entreprise"
+  description="DEBUHCO — Développement Buhumuza Company : la vision de Francine Niyonsaba pour une industrie plastique durable au Burundi."
+>
+  <PageHero
+    eyebrow="Entreprise"
+    title="Une vision portée par l'excellence."
+    text="Développement Buhumuza Company (DEBUHCO) est née de la volonté de concilier performance industrielle, impact social et responsabilité environnementale au Burundi."
+  />
+
+  <!-- Founder -->
+  <section class="section">
+    <div class="container">
+      <div class="founder-block">
+        <div class="founder-block__card" data-reveal>
+          <div class="founder-block__avatar" aria-hidden="true">FN</div>
+          <h2 class="founder-block__name">{company.founder.name}</h2>
+          <p class="founder-block__role">{company.founder.role}</p>
+          <div class="founder-block__tags">
+            <span class="chip"><Icon name="trending-up" size={14} /> Demi-fond</span>
+            <span class="chip"><Icon name="globe" size={14} /> Burundi</span>
+          </div>
+        </div>
+        <div class="founder-block__bio" data-reveal style="--reveal-delay:120ms">
+          <SectionHeading eyebrow="La promotrice" title="Du sport de haut niveau à l'industrie durable." max="22ch">
+            <p class="lead">{company.founder.bio}</p>
+            <p class="founder-block__p">
+              Consciente de son rôle de figure emblématique du sport, Francine Niyonsaba
+              investit aujourd'hui dans la fabrication de préformes et bouteilles à partir
+              du recyclage et de granulés importés — avec un double objectif&nbsp;: protéger
+              l'environnement et soutenir la jeunesse burundaise.
+            </p>
+          </SectionHeading>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission + legal -->
+  <section class="section dark">
+    <div class="container">
+      <div class="mission">
+        <div data-reveal>
+          <SectionHeading eyebrow="Notre mission" title="Développer une industrie durable de transformation du plastique." dark max="24ch">
+            <p class="lead">
+              DEBUHCO ambitionne de devenir une référence du recyclage et de la production
+              de préformes et bouteilles PET de haute qualité au Burundi — en générant des
+              emplois et en soutenant l'autonomisation des jeunes et des groupes vulnérables.
+            </p>
+          </SectionHeading>
+        </div>
+        <div class="identity card" data-reveal style="--reveal-delay:120ms">
+          <h3 class="identity__h">Identité légale</h3>
+          <dl class="identity__list">
+            <div><dt>Dénomination</dt><dd>{company.legalName}</dd></div>
+            <div><dt>Forme juridique</dt><dd>{company.legal.form}</dd></div>
+            <div><dt>NIF</dt><dd>{company.legal.nif}</dd></div>
+            <div><dt>Registre de commerce</dt><dd>{company.legal.rc}</dd></div>
+            <div><dt>Siège social</dt><dd>{company.address.line1}, {company.address.line2}, {company.address.city}, {company.address.country}</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Nos valeurs" title="Ce qui guide chacune de nos décisions." align="center" max="22ch" />
+      <div class="grid grid--4 values">
+        {
+          values.map((v, i) => (
+            <article class="value card" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <span class="value__icon"><Icon name={v.icon} size={22} /></span>
+              <h3 class="value__title">{v.title}</h3>
+              <p class="value__text">{v.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section dark">
+    <div class="container">
+      <SectionHeading eyebrow="Calendrier du projet" title="Un déploiement structuré, 2025 – 2026." dark max="24ch" />
+      <ol class="timeline">
+        {
+          timeline.map((t, i) => (
+            <li class="timeline__item" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+              <span class="timeline__dot" aria-hidden="true"></span>
+              <span class="timeline__period">{t.period}</span>
+              <h3 class="timeline__title">{t.title}</h3>
+              <p class="timeline__text">{t.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Markets + vision -->
+  <section class="section">
+    <div class="container">
+      <div class="vision card" data-reveal>
+        <div class="vision__copy">
+          <span class="eyebrow">Vision Burundi 2040–2060</span>
+          <h2 class="vision__title">Contribuer à l'industrialisation et à l'intégration régionale.</h2>
+          <p class="vision__text">
+            Le projet s'inscrit pleinement dans les objectifs de développement du Burundi&nbsp;:
+            réduire la dépendance aux importations, créer des emplois, encourager une économie
+            circulaire et renforcer l'intégration économique avec les marchés voisins.
+          </p>
+          <ul class="vision__markets">
+            {markets.map((m) => <li class="chip"><Icon name="map-pin" size={14} /> {m}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .founder-block { display: grid; gap: 2.4rem; align-items: start; }
+  .founder-block__card { text-align: center; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 2.4rem; }
+  .founder-block__avatar { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 1.2rem; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 2.2rem; color: #06110d; background: var(--grad); box-shadow: var(--shadow-lg); }
+  .founder-block__name { font-size: var(--step-2); }
+  .founder-block__role { color: var(--muted); margin-top: 0.3rem; }
+  .founder-block__tags { display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
+  .founder-block__p { color: var(--muted); margin-top: 1rem; }
+  @media (min-width: 880px) { .founder-block { grid-template-columns: 0.8fr 1.2fr; } }
+
+  .mission { display: grid; gap: 2.4rem; align-items: start; }
+  .identity__h { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--green-bright); margin-bottom: 1.2rem; }
+  .identity__list { display: grid; gap: 1rem; }
+  .identity__list div { display: grid; gap: 0.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line-on-dark); }
+  .identity__list div:last-child { border-bottom: 0; padding-bottom: 0; }
+  .identity__list dt { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-on-dark); }
+  .identity__list dd { margin: 0; font-weight: 600; font-family: var(--font-display); }
+  @media (min-width: 900px) { .mission { grid-template-columns: 1.1fr 0.9fr; } }
+
+  .values { margin-top: 3rem; }
+  .value__icon { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 14px; background: var(--grad-soft); color: var(--green-deep); margin-bottom: 1rem; }
+  .value__title { font-size: var(--step-1); }
+  .value__text { color: var(--muted); margin-top: 0.4rem; font-size: 0.95rem; }
+
+  .timeline { margin-top: 3rem; display: grid; gap: 1.2rem; position: relative; }
+  .timeline__item { position: relative; padding-left: 1.8rem; border-left: 2px solid var(--line-on-dark); padding-bottom: 0.4rem; }
+  .timeline__dot { position: absolute; left: -7px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--grad); }
+  .timeline__period { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--green-bright); }
+  .timeline__title { margin-top: 0.3rem; font-size: 1.15rem; }
+  .timeline__text { margin-top: 0.3rem; color: var(--muted-on-dark); font-size: 0.93rem; }
+  @media (min-width: 760px) { .timeline { grid-template-columns: 1fr 1fr; gap: 1.4rem 2.4rem; } }
+
+  .vision { background: var(--ink); color: var(--text-on-dark); border: 0; overflow: hidden; position: relative; }
+  .vision .eyebrow { color: var(--green-bright); }
+  .vision__title { font-size: var(--step-2); margin-top: 1rem; max-width: 24ch; }
+  .vision__text { color: var(--muted-on-dark); margin-top: 1rem; max-width: 62ch; }
+  .vision__markets { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem; }
+</style>

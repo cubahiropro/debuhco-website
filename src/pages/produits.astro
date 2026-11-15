@@ -1,0 +1,137 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/path';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import { products, company } from '../data/site';
+
+const productIcons: Record<string, string> = {
+  preformes: 'droplet',
+  bouteilles: 'package',
+  bouchons: 'shield-check',
+  etiquettes: 'zap',
+};
+
+const volumes = [
+  { v: '1,5 L', g: '38 – 45 g', u: 'Eau minérale, sodas' },
+  { v: '1 L', g: '28 – 35 g', u: 'Eau minérale, jus' },
+  { v: '500 mL', g: '18 – 22 g', u: 'Eau, boissons' },
+  { v: '350 mL', g: '14 – 18 g', u: 'Jus, boissons lactées' },
+];
+---
+
+<Base
+  title="Produits"
+  description="Préformes PET, bouteilles soufflées, bouchons PEHD et étiquetage — la gamme complète DEBUHCO, fabriquée au Burundi."
+>
+  <PageHero
+    eyebrow="Produits"
+    title="Une gamme complète, un seul fournisseur."
+    text="Préformes, bouteilles, bouchons et étiquetage produits en interne : qualité maîtrisée, coûts réduits et disponibilité constante pour les industriels burundais et de la sous-région."
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="plist">
+        {
+          products.map((p, i) => (
+            <article id={p.id} class="pcard card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <div class="pcard__head">
+                <span class="pcard__icon"><Icon name={productIcons[p.id]} size={24} /></span>
+                <h2 class="pcard__name">{p.name}</h2>
+              </div>
+              <p class="pcard__summary">{p.summary}</p>
+              <dl class="pcard__specs">
+                {p.specs.map((s) => (
+                  <div><dt>{s.k}</dt><dd>{s.v}</dd></div>
+                ))}
+              </dl>
+              <p class="pcard__usage"><Icon name="check" size={16} /> {p.usage}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Preform figure -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <figure class="pfig duo" data-reveal>
+        <img src={url("/images/preforms.jpg")} alt="Préformes PET injectées, prêtes au soufflage" loading="lazy" decoding="async" width="1280" height="853" />
+        <figcaption class="pfig__cap">Préformes PET — l'ébauche injectée avant soufflage.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Volumes table -->
+  <section class="section dark">
+    <div class="container">
+      <SectionHeading eyebrow="Grammage & volumes" title="Des formats adaptés à chaque usage." dark max="24ch" />
+      <div class="table" data-reveal>
+        <div class="table__row table__row--head">
+          <span>Volume</span><span>Grammage préforme</span><span>Utilisation principale</span>
+        </div>
+        {
+          volumes.map((r) => (
+            <div class="table__row">
+              <span class="table__v">{r.v}</span>
+              <span>{r.g}</span>
+              <span class="table__u">{r.u}</span>
+            </div>
+          ))
+        }
+      </div>
+      <p class="table__note">
+        Le grammage conditionne la résistance de la bouteille et son coût&nbsp;: il est
+        ajusté selon vos spécifications via des moules interchangeables.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="pcta" data-reveal>
+        <div>
+          <h2 class="pcta__title">Un besoin précis&nbsp;? Parlons volumes et grammages.</h2>
+          <p class="pcta__text">Recevez une offre adaptée à votre cahier des charges, avec des tarifs dégressifs selon la quantité.</p>
+        </div>
+        <a href={url("/contact")} class="btn btn--primary">Demander un devis <Icon name="arrow-right" size={18} /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .plist { display: grid; gap: 1.4rem; grid-template-columns: 1fr; }
+  .pcard { display: flex; flex-direction: column; }
+  .pcard:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: transparent; }
+  .pcard__head { display: flex; align-items: center; gap: 1rem; }
+  .pcard__icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 15px; background: var(--grad-soft); color: var(--green-deep); flex: none; }
+  .pcard__name { font-size: var(--step-2); }
+  .pcard__summary { color: var(--muted); margin-top: 1rem; }
+  .pcard__specs { margin-top: 1.4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .pcard__specs div { background: var(--paper); border-radius: 11px; padding: 0.65rem 0.8rem; }
+  .pcard__specs dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .pcard__specs dd { margin: 0.15rem 0 0; font-weight: 600; font-family: var(--font-display); }
+  .pcard__usage { margin-top: 1.2rem; display: flex; gap: 0.5rem; align-items: center; color: var(--green-deep); font-size: 0.9rem; font-weight: 500; }
+  @media (min-width: 720px) { .plist { grid-template-columns: 1fr 1fr; } }
+
+  .table { margin-top: 2.4rem; border: 1px solid var(--line-on-dark); border-radius: var(--radius); overflow: hidden; }
+  .table__row { display: grid; grid-template-columns: 1fr 1.4fr 1.6fr; gap: 1rem; padding: 1rem 1.3rem; border-bottom: 1px solid var(--line-on-dark); align-items: center; }
+  .table__row:last-child { border-bottom: 0; }
+  .table__row--head { background: rgba(255,255,255,0.04); font-family: var(--font-display); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green-bright); }
+  .table__v { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; }
+  .table__u { color: var(--muted-on-dark); }
+  .table__note { margin-top: 1.2rem; color: var(--muted-on-dark); font-size: 0.9rem; max-width: 60ch; }
+
+  .pcta { display: flex; flex-wrap: wrap; gap: 1.6rem; justify-content: space-between; align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: clamp(1.8rem, 4vw, 3rem); }
+  .pcta__title { font-size: var(--step-2); max-width: 24ch; }
+  .pcta__text { color: var(--muted); margin-top: 0.6rem; max-width: 46ch; }
+
+  .pfig { border-radius: var(--radius-lg); aspect-ratio: 16 / 7; }
+  .pfig img { position: absolute; inset: 0; }
+  .pfig__cap { position: absolute; z-index: 2; left: 0; bottom: 0; padding: 1.1rem 1.4rem; color: var(--text-on-dark); font-family: var(--font-head); font-weight: 600; font-size: 0.9rem; }
+</style>

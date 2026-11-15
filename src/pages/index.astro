@@ -1,0 +1,427 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/path';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import {
+  company,
+  stats,
+  products,
+  processSteps,
+  impacts,
+  markets,
+  differentiators,
+} from '../data/site';
+
+const impactIcons: Record<string, string> = {
+  eco: 'trending-up',
+  social: 'users',
+  env: 'leaf',
+};
+const productIcons: Record<string, string> = {
+  preformes: 'droplet',
+  bouteilles: 'package',
+  bouchons: 'shield-check',
+  etiquettes: 'zap',
+};
+---
+
+<Base>
+  <Hero />
+
+  <!-- Markets marquee -->
+  <section class="markets dark" aria-label="Marchés desservis">
+    <div class="markets__track" data-marquee>
+      <div class="markets__inner" data-marquee-inner>
+        {
+          [...markets, 'Made in Burundi', 'Économie circulaire'].map((m) => (
+            <span class="markets__item">
+              <Icon name="globe" size={18} /> {m}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="section" id="stats">
+    <div class="container">
+      <div class="stats grid grid--4">
+        {
+          stats.map((s, i) => (
+            <div class="stat card" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+              <div class="stat__num">
+                <span data-count={s.value}>0</span>{s.suffix}
+              </div>
+              <div class="stat__label">{s.label}</div>
+              <p class="stat__detail">{s.detail}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Why / differentiators -->
+  <section class="section why">
+    <div class="container">
+      <div class="why__grid">
+        <div class="why__intro">
+          <SectionHeading
+            eyebrow="Pourquoi DEBUHCO"
+            title="Une industrie locale, pensée pour durer."
+            max="18ch"
+          >
+            <p class="lead">
+              Le Burundi importe aujourd'hui l'essentiel de ses emballages PET. DEBUHCO
+              comble ce vide industriel avec une production locale, rapide et compétitive.
+            </p>
+            <a href={url("/entreprise")} class="btn btn--ghost why__link">
+              Notre histoire <Icon name="arrow-up-right" size={17} />
+            </a>
+          </SectionHeading>
+        </div>
+
+        <ul class="why__list">
+          {
+            differentiators.map((d, i) => (
+              <li class="why__item card" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+                <span class="why__index">0{i + 1}</span>
+                <div>
+                  <h3 class="why__title">{d.title}</h3>
+                  <p class="why__text">{d.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section class="section products" id="produits">
+    <div class="container">
+      <div class="products__head">
+        <SectionHeading eyebrow="Notre gamme" title="Un guichet unique, de la préforme au produit étiqueté." max="22ch" />
+        <a href={url("/produits")} class="btn btn--ghost products__all">
+          Voir tous les produits <Icon name="arrow-right" size={17} />
+        </a>
+      </div>
+
+      <div class="grid grid--4 products__grid">
+        {
+          products.map((p, i) => (
+            <article class="product card" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <span class="product__icon"><Icon name={productIcons[p.id]} size={22} /></span>
+              <h3 class="product__name">{p.name}</h3>
+              <p class="product__summary">{p.summary}</p>
+              <dl class="product__specs">
+                {p.specs.map((s) => (
+                  <div><dt>{s.k}</dt><dd>{s.v}</dd></div>
+                ))}
+              </dl>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Industrial band -->
+  <section class="band" aria-label="Capacité industrielle">
+    <div class="band__media duo-media">
+      <img src={url("/images/injection.jpg")} alt="Machine de moulage par injection plastique en atelier de production" loading="lazy" decoding="async" width="1280" height="720" />
+    </div>
+    <div class="container band__inner" data-reveal>
+      <span class="eyebrow eyebrow--on-dark">Capacité industrielle</span>
+      <h2 class="band__title">Deux lignes.<br />Une usine.<br />Des standards élevés.</h2>
+      <p class="band__text">
+        Une ligne d'injection pour les préformes et bouchons, une ligne de soufflage pour
+        les bouteilles — avec déshumidification, refroidissement et contrôle qualité intégrés.
+      </p>
+      <div class="band__stats">
+        <div><strong>48</strong><span>cavités / moule préformes</span></div>
+        <div><strong>4</strong><span>formats de bouteilles</span></div>
+        <div><strong>1 058 t</strong><span>de PET transformées / an</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section process dark">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Notre procédé"
+        title="Du déchet collecté à la bouteille livrée."
+        dark
+        align="center"
+      />
+      <ol class="process__list">
+        {
+          processSteps.map((step, i) => (
+            <li class="process__step" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <span class="process__n gradient-text">{step.n}</span>
+              <h3 class="process__title">{step.title}</h3>
+              <p class="process__text">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Sustainability band -->
+  <section class="section sustain">
+    <div class="container">
+      <div class="sustain__grid">
+        <div class="sustain__art" data-reveal aria-hidden="true">
+          <div class="sustain__loop">
+            <Icon name="recycle" size={64} />
+          </div>
+          <span class="sustain__tag sustain__tag--1"><Icon name="droplet" size={15} /> Collecte</span>
+          <span class="sustain__tag sustain__tag--2"><Icon name="factory" size={15} /> Broyage</span>
+          <span class="sustain__tag sustain__tag--3"><Icon name="package" size={15} /> Nouvelle vie</span>
+        </div>
+        <div class="sustain__copy">
+          <SectionHeading
+            eyebrow="Économie circulaire"
+            title="Les bouteilles usagées redeviennent une ressource."
+            max="20ch"
+          >
+            <p class="lead">
+              En récupérant, triant et transformant les bouteilles PET usagées en granulés
+              recyclés, DEBUHCO réduit la pollution plastique tout en abaissant le coût de
+              la matière première. Le mix cible&nbsp;: 70&nbsp;% recyclé, 30&nbsp;% vierge.
+            </p>
+            <ul class="sustain__points">
+              <li><Icon name="check" size={18} /> Réseau de collecte dans les grandes villes</li>
+              <li><Icon name="check" size={18} /> Gestion écologique des eaux de lavage</li>
+              <li><Icon name="sun" size={18} /> Étude d'une alimentation solaire du site</li>
+            </ul>
+            <a href={url("/durabilite")} class="btn btn--primary">
+              Notre démarche durable <Icon name="arrow-right" size={18} />
+            </a>
+          </SectionHeading>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact -->
+  <section class="section" id="impact">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Notre impact"
+        title="Un projet à fort impact économique, social et environnemental."
+        align="center"
+        max="30ch"
+      />
+      <div class="grid grid--3 impact__grid">
+        {
+          impacts.map((im, i) => (
+            <article class="impact card" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+              <span class="impact__icon"><Icon name={impactIcons[im.key]} size={24} /></span>
+              <h3 class="impact__title">{im.title}</h3>
+              <ul class="impact__points">
+                {im.points.map((pt) => (
+                  <li><Icon name="check" size={17} /> {pt}</li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Founder quote -->
+  <section class="section founder dark">
+    <div class="container founder__inner" data-reveal>
+      <div class="founder__avatar" aria-hidden="true">FN</div>
+      <blockquote class="founder__quote">
+        <p>
+          « Mon objectif est double&nbsp;: contribuer à la protection de l'environnement
+          en réduisant la pollution plastique, et soutenir la jeunesse, les femmes et
+          les sportifs burundais en leur offrant de meilleures perspectives d'avenir. »
+        </p>
+        <footer>
+          <span class="founder__name">{company.founder.name}</span>
+          <span class="founder__role">{company.founder.role} · {company.legalName}</span>
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta" data-reveal>
+        <div class="cta__glow" aria-hidden="true"></div>
+        <h2 class="cta__title">Prêt à produire localement&nbsp;?</h2>
+        <p class="cta__text">
+          Industriels de l'eau, des boissons et de l'agroalimentaire&nbsp;: obtenez des
+          préformes, bouchons et bouteilles fiables, à prix compétitif et sans délais d'importation.
+        </p>
+        <div class="cta__actions">
+          <a href={url("/contact")} class="btn btn--primary">Demander un devis <Icon name="arrow-right" size={18} /></a>
+          <a href={`mailto:${company.email}`} class="btn btn--ghost">{company.email}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Markets marquee */
+  .markets { padding-block: 1.1rem; border-block: 1px solid var(--line-on-dark); overflow: hidden; }
+  .markets__track { width: 100%; overflow: hidden; }
+  .markets__inner { display: flex; gap: 3rem; width: max-content; }
+  .markets__item {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-display); font-weight: 500; white-space: nowrap;
+    color: var(--muted-on-dark); font-size: 1rem;
+  }
+  .markets__item svg { color: var(--green-bright); }
+
+  /* Stats */
+  .stat { text-align: left; }
+  .stat__num {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em;
+    font-size: clamp(2.3rem, 5vw, 3.4rem); line-height: 1;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .stat__label { margin-top: 0.6rem; font-weight: 600; font-family: var(--font-display); }
+  .stat__detail { margin-top: 0.3rem; color: var(--muted); font-size: 0.9rem; }
+
+  /* Why */
+  .why__grid { display: grid; gap: 2.5rem; }
+  .why__link { margin-top: 0.6rem; align-self: flex-start; }
+  .why__list { display: grid; gap: 1rem; }
+  .why__item { display: flex; gap: 1.2rem; align-items: flex-start; }
+  .why__item:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: transparent; }
+  .why__index {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;
+    color: var(--green-deep); flex: none; padding-top: 0.15rem;
+  }
+  .why__title { font-size: var(--step-1); margin-bottom: 0.4rem; }
+  .why__text { color: var(--muted); }
+  @media (min-width: 920px) {
+    .why__grid { grid-template-columns: 0.9fr 1.1fr; align-items: start; }
+    .why__list { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Products */
+  .products__head { display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: space-between; align-items: flex-end; margin-bottom: 2.4rem; }
+  .products__all { flex: none; }
+  .product { display: flex; flex-direction: column; }
+  .product:hover { transform: translateY(-6px); box-shadow: var(--shadow); border-color: transparent; }
+  .product__icon {
+    display: grid; place-items: center; width: 50px; height: 50px; border-radius: 14px;
+    background: var(--grad-soft); color: var(--green-deep); margin-bottom: 1.1rem;
+  }
+  .product__name { font-size: var(--step-1); }
+  .product__summary { color: var(--muted); margin-top: 0.5rem; font-size: 0.96rem; flex: 1; }
+  .product__specs { margin-top: 1.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .product__specs div { background: var(--paper); border-radius: 10px; padding: 0.5rem 0.65rem; }
+  .product__specs dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .product__specs dd { margin: 0.1rem 0 0; font-weight: 600; font-family: var(--font-display); font-size: 0.92rem; }
+
+  /* Process */
+  .process__list { display: grid; gap: 1.2rem; margin-top: 3rem; counter-reset: step; }
+  .process__step {
+    position: relative; padding: 1.6rem; border: 1px solid var(--line-on-dark); border-radius: var(--radius);
+    background: rgba(255,255,255,0.02); transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .process__step:hover { border-color: rgba(56,224,140,0.4); background: rgba(255,255,255,0.04); }
+  .process__n { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; }
+  .process__title { margin-top: 0.6rem; font-size: var(--step-1); }
+  .process__text { margin-top: 0.5rem; color: var(--muted-on-dark); font-size: 0.95rem; }
+  @media (min-width: 720px) { .process__list { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .process__list { grid-template-columns: repeat(5, 1fr); } }
+
+  /* Sustainability */
+  .sustain__grid { display: grid; gap: 3rem; align-items: center; }
+  .sustain__art {
+    position: relative; aspect-ratio: 1; max-width: 420px; margin-inline: auto; width: 100%;
+    border-radius: var(--radius-lg); background: var(--grad-soft);
+    display: grid; place-items: center; overflow: hidden;
+    border: 1px solid rgba(21,195,122,0.2);
+  }
+  .sustain__loop {
+    width: 150px; height: 150px; border-radius: 50%; display: grid; place-items: center;
+    color: #06110d; background: var(--grad); box-shadow: var(--shadow-lg);
+    animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { transform: scale(1.05); } }
+  .sustain__tag {
+    position: absolute; display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 0.4rem 0.8rem; font-size: 0.82rem; font-weight: 600; font-family: var(--font-display);
+    box-shadow: var(--shadow-sm);
+  }
+  .sustain__tag svg { color: var(--green-deep); }
+  .sustain__tag--1 { top: 12%; left: 8%; }
+  .sustain__tag--2 { top: 44%; right: 4%; }
+  .sustain__tag--3 { bottom: 12%; left: 14%; }
+  .sustain__points { display: grid; gap: 0.7rem; margin: 0.4rem 0 0.4rem; }
+  .sustain__points li { display: flex; gap: 0.6rem; align-items: center; }
+  .sustain__points svg { color: var(--green-deep); flex: none; }
+  @media (prefers-reduced-motion: reduce) { .sustain__loop { animation: none; } }
+  @media (min-width: 900px) { .sustain__grid { grid-template-columns: 1fr 1.1fr; } }
+
+  /* Impact */
+  .impact__grid { margin-top: 3rem; }
+  .impact { display: flex; flex-direction: column; }
+  .impact:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: transparent; }
+  .impact__icon {
+    display: grid; place-items: center; width: 54px; height: 54px; border-radius: 16px;
+    background: var(--grad-soft); color: var(--green-deep); margin-bottom: 1.1rem;
+  }
+  .impact__title { font-size: var(--step-2); }
+  .impact__points { margin-top: 1.1rem; display: grid; gap: 0.7rem; }
+  .impact__points li { display: flex; gap: 0.6rem; color: var(--muted); }
+  .impact__points svg { color: var(--green-deep); flex: none; margin-top: 4px; }
+
+  /* Founder */
+  .founder__inner { display: flex; gap: 2rem; align-items: center; flex-direction: column; text-align: center; }
+  .founder__avatar {
+    flex: none; width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center;
+    font-family: var(--font-display); font-weight: 700; font-size: 1.8rem; color: #06110d;
+    background: var(--grad); box-shadow: var(--shadow-lg);
+  }
+  .founder__quote p { font-family: var(--font-display); font-size: var(--step-2); line-height: 1.35; font-weight: 500; }
+  .founder__quote footer { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.2rem; }
+  .founder__name { font-weight: 700; font-family: var(--font-display); font-size: 1.1rem; color: var(--green-bright); }
+  .founder__role { color: var(--muted-on-dark); font-size: 0.92rem; }
+  @media (min-width: 820px) {
+    .founder__inner { flex-direction: row; text-align: left; }
+    .founder__quote footer { flex-direction: row; gap: 0.6rem; align-items: center; }
+  }
+
+  /* CTA */
+  .cta {
+    position: relative; overflow: hidden; text-align: center;
+    background: var(--ink); color: var(--text-on-dark);
+    border-radius: var(--radius-lg); padding: clamp(2.5rem, 6vw, 5rem) var(--gutter);
+    isolation: isolate;
+  }
+  .cta__glow {
+    position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(ellipse 60% 120% at 50% 0%, rgba(21,195,122,0.35), transparent 70%);
+  }
+  .cta__title { font-size: var(--step-3); }
+  .cta__text { color: var(--muted-on-dark); max-width: 52ch; margin: 1rem auto 0; }
+  .cta__actions { display: flex; flex-wrap: wrap; gap: 0.9rem; justify-content: center; margin-top: 2rem; }
+  .cta .btn--ghost { color: var(--text-on-dark); border-color: var(--line-on-dark); }
+
+  /* Industrial band */
+  .band__inner { max-width: var(--container); }
+  .band__title { font-size: var(--step-3); margin-top: 0.8rem; }
+  .band__text { color: var(--muted-on-dark); max-width: 48ch; margin-top: 1.1rem; }
+  .band__stats { display: flex; flex-wrap: wrap; gap: 1.6rem 2.6rem; margin-top: 2rem; }
+  .band__stats strong { display: block; font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 4vw, 3rem); color: var(--green-bright); line-height: 1; }
+  .band__stats span { color: var(--muted-on-dark); font-size: 0.85rem; }
+</style>

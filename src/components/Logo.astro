@@ -1,0 +1,57 @@
+---
+interface Props {
+  class?: string;
+  mono?: boolean; // single-color (uses currentColor) for footer/dark
+}
+const { class: cls = '', mono = false } = Astro.props;
+const gid = 'dbg-' + Math.random().toString(36).slice(2, 8);
+---
+
+<span class={`logo ${cls}`} aria-label="DEBUHCO">
+  <svg class="logo__mark" width="34" height="34" viewBox="0 0 40 40" role="img" aria-hidden="true">
+    {!mono && (
+      <defs>
+        <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f46104" />
+          <stop offset="1" stop-color="#ff9a3d" />
+        </linearGradient>
+      </defs>
+    )}
+    <circle
+      cx="20"
+      cy="20"
+      r="18"
+      fill="none"
+      stroke={mono ? 'currentColor' : `url(#${gid})`}
+      stroke-width="2.4"
+      stroke-dasharray="78 32"
+      stroke-linecap="round"
+      transform="rotate(-90 20 20)"
+    />
+    <path
+      d="M20 9c3.4 3.4 6 6.7 6 10.3A6 6 0 0 1 14 19.3C14 15.7 16.6 12.4 20 9Z"
+      fill={mono ? 'currentColor' : `url(#${gid})`}
+    />
+  </svg>
+  <span class="logo__word">DEBUHCO</span>
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.28rem;
+    letter-spacing: -0.02em;
+    color: inherit;
+    line-height: 1;
+  }
+  .logo__mark {
+    flex: none;
+  }
+  .logo__word {
+    white-space: nowrap;
+  }
+</style>
