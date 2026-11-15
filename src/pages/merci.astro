@@ -2,12 +2,15 @@
 import Base from '../layouts/Base.astro';
 import { url } from '../lib/path';
 import Icon from '../components/Icon.astro';
+import Illustration from '../components/Illustration.astro';
 ---
 
 <Base title="Merci" description="Votre demande a bien été envoyée à DEBUHCO.">
   <section class="section thanks dark">
     <div class="container thanks__inner" data-reveal>
-      <span class="thanks__check"><Icon name="check" size={44} /></span>
+      <div class="thanks__illu">
+        <Illustration name="message-sent" label="Illustration d'un message envoyé" class="illu--dark" />
+      </div>
       <h1 class="thanks__title">Merci, votre demande est envoyée&nbsp;!</h1>
       <p class="lead thanks__text">
         Notre équipe vous recontacte sous 48&nbsp;h ouvrées avec une offre adaptée.
@@ -24,7 +27,8 @@ import Icon from '../components/Icon.astro';
 <style>
   .thanks { min-height: 70vh; display: grid; place-items: center; }
   .thanks__inner { text-align: center; max-width: 54ch; margin-inline: auto; }
-  .thanks__check { display: grid; place-items: center; width: 84px; height: 84px; margin: 0 auto 1.6rem; border-radius: 50%; color: #06110d; background: var(--grad); box-shadow: var(--shadow-lg); }
+  .thanks__illu { max-width: 320px; margin: 0 auto 2rem; }
+  .thanks__illu .illu { color: var(--green-bright); }
   .thanks__title { font-size: var(--step-3); }
   .thanks__text { color: var(--muted-on-dark); margin: 1.2rem auto 0; }
   .thanks__actions { display: flex; flex-wrap: wrap; gap: 0.9rem; justify-content: center; margin-top: 2rem; }

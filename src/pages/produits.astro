@@ -4,6 +4,7 @@ import { url } from '../lib/path';
 import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Icon from '../components/Icon.astro';
+import Illustration from '../components/Illustration.astro';
 import { products, company } from '../data/site';
 
 const productIcons: Record<string, string> = {
@@ -87,6 +88,31 @@ const volumes = [
         Le grammage conditionne la résistance de la bouteille et son coût&nbsp;: il est
         ajusté selon vos spécifications via des moules interchangeables.
       </p>
+    </div>
+  </section>
+
+  <!-- Production to delivery -->
+  <section class="section">
+    <div class="container">
+      <div class="split split--media-first">
+        <div class="split__media illu-panel" data-reveal>
+          <Illustration name="logistics" label="Illustration d'une chaîne logistique et de livraison" />
+        </div>
+        <div class="split__copy" data-reveal style="--reveal-delay:120ms">
+          <SectionHeading eyebrow="Guichet unique" title="De la production à votre quai de chargement." max="20ch">
+            <p class="lead">
+              Préformes, bouteilles, bouchons et étiquetage sont produits sous un même toit,
+              puis conditionnés et livrés aux industriels du Burundi et de la sous-région —
+              sans les délais ni les aléas de l'importation.
+            </p>
+            <ul class="split__points">
+              <li><Icon name="check" size={18} /> Approvisionnement local, rapide et régulier</li>
+              <li><Icon name="check" size={18} /> Qualité contrôlée de bout en bout</li>
+              <li><Icon name="check" size={18} /> Tarifs dégressifs selon les volumes</li>
+            </ul>
+          </SectionHeading>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -17,12 +17,14 @@ Site 100 % statique, déployable sans serveur ni base de données.
 | Langage | TypeScript (strict) |
 | Animations | GSAP 3 + ScrollTrigger |
 | Icônes | SVG inline (style Lucide, sans dépendance runtime) |
-| Polices | Space Grotesk (titres) + Inter (texte) via Google Fonts |
+| Illustrations | [unDraw](https://undraw.co) (MIT), inline et recolorées à la marque |
+| Police | **Calibri** (repli : Carlito / Segoe UI / `system-ui`) — aucune police chargée à distance |
 | SEO | `@astrojs/sitemap`, JSON-LD, Open Graph, canonical |
-| Hébergement cible | Netlify (statique) |
+| Hébergement cible | GitHub Pages (`base: /debuhco-website`) · config Netlify également fournie |
 
 Aucune photo de stock n'est présentée comme une photo d'usine réelle : l'identité
-visuelle repose sur des illustrations SVG et des dégradés sur mesure.
+visuelle repose sur des illustrations vectorielles (unDraw, recolorées à l'orange
+de la marque), des dégradés sur mesure et quelques photos libres dûment créditées.
 
 ## Démarrage
 
@@ -39,14 +41,21 @@ npm run preview    # prévisualiser le build de production
 
 ```
 src/
-├── components/     Logo, Header, Footer, Hero, Icon, SectionHeading, PageHero
+├── assets/undraw/  Illustrations unDraw (SVG inline, licence MIT) + LICENSE
+├── components/     Logo, Header, Footer, Hero, Icon, SectionHeading, PageHero, Illustration
 ├── data/site.ts    Source de vérité du contenu (issue du plan d'affaires)
 ├── layouts/        Base.astro — <head>, SEO, header/footer, chargement des scripts
-├── pages/          index, entreprise, produits, durabilite, contact, merci, 404
+├── lib/path.ts     Préfixe les liens internes avec le base path (GitHub Pages)
+├── pages/          index, entreprise, produits, durabilite, contact, merci, credits, 404
 ├── scripts/        animations.ts — GSAP/ScrollTrigger (respecte prefers-reduced-motion)
 └── styles/         global.css — design system (tokens, boutons, cartes, utilitaires)
-public/             favicon.svg, og.svg, robots.txt
+public/             favicon.svg, og.svg, robots.txt, images/ (photos créditées)
 ```
+
+> Les illustrations utilisent `currentColor` : le composant `Illustration.astro`
+> les insère en ligne pour que l'accent reprenne l'orange de la marque via CSS.
+> Le contenu masqué par les animations (`[data-reveal]`) n'est caché que si JS est
+> actif (`html.js`), donc il reste visible sans JavaScript.
 
 ## Contenu
 

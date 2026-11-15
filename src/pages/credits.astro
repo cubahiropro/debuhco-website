@@ -62,10 +62,19 @@ const images = [
           ))
         }
       </ul>
+      <div class="credits__illus" data-reveal>
+        <h2 class="credits__h">Illustrations</h2>
+        <p>
+          Les illustrations vectorielles des différentes sections proviennent de
+          <a href="https://undraw.co" target="_blank" rel="noopener noreferrer">unDraw</a>
+          (Katerina Limpitsouni), librement réutilisables sous licence MIT. Elles ont été
+          recolorées aux couleurs de la marque DEBUHCO.
+        </p>
+      </div>
+
       <p class="credits__note">
-        Les illustrations vectorielles, icônes et le reste de l'interface ont été créés
-        spécifiquement pour DEBUHCO. Les données chiffrées proviennent du plan d'affaires
-        officiel de la société.
+        Les icônes, le logo et le reste de l'interface ont été créés spécifiquement pour
+        DEBUHCO. Les données chiffrées proviennent du plan d'affaires officiel de la société.
       </p>
     </div>
   </section>
@@ -82,6 +91,11 @@ const images = [
   .credit__meta dd { margin: 0.15rem 0 0; font-weight: 600; font-family: var(--font-head); }
   .credit__link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1rem; color: var(--green-deep); font-weight: 600; font-size: 0.9rem; }
   .credit__link:hover { color: var(--green); }
-  .credits__note { margin-top: 2rem; color: var(--muted); font-size: 0.92rem; max-width: 70ch; }
+  .credits__illus { margin-top: 2.4rem; }
+  .credits__h { font-size: var(--step-1); }
+  .credits__illus p { margin-top: 0.6rem; color: var(--muted); font-size: 0.95rem; max-width: 70ch; }
+  .credits__illus a { color: var(--green-deep); font-weight: 600; }
+  .credits__illus a:hover { color: var(--green); }
+  .credits__note { margin-top: 1.4rem; color: var(--muted); font-size: 0.92rem; max-width: 70ch; }
   @media (min-width: 680px) { .credit { grid-template-columns: 260px 1fr; } }
 </style>

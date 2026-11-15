@@ -1,6 +1,6 @@
 /* ============================================================
    DEBUHCO — Design System
-   OneRPM-inspired: black / white / vivid orange. Bebas Neue + Montserrat.
+   OneRPM-inspired: black / white / vivid orange. Typeface: Calibri.
    ============================================================ */
 
 :root {
@@ -31,19 +31,19 @@
   --grad: linear-gradient(120deg, #f46104 0%, #ff9a3d 100%);
   --grad-soft: linear-gradient(120deg, rgba(244, 97, 4, 0.14), rgba(255, 154, 61, 0.14));
 
-  /* Type — OneRPM: Bebas Neue (display) + Montserrat (UI/body) */
-  --font-display: 'Bebas Neue', 'Oswald', Impact, sans-serif;
-  --font-head: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Montserrat', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* Type — Calibri everywhere (Carlito = free metric-compatible fallback) */
+  --font-display: Calibri, Carlito, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-head: Calibri, Carlito, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-body: Calibri, Carlito, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
 
-  /* Scale (fluid) — bumped for Bebas Neue, which reads smaller/condensed */
-  --step--1: clamp(0.83rem, 0.79rem + 0.18vw, 0.94rem);
-  --step-0: clamp(1rem, 0.95rem + 0.24vw, 1.12rem);
-  --step-1: clamp(1.35rem, 1.2rem + 0.6vw, 1.75rem);
-  --step-2: clamp(2rem, 1.6rem + 1.6vw, 3.1rem);
-  --step-3: clamp(2.6rem, 2rem + 2.8vw, 4.6rem);
-  --step-4: clamp(3.2rem, 2.3rem + 4.4vw, 6.4rem);
-  --step-5: clamp(4rem, 2.5rem + 7vw, 9.5rem);
+  /* Scale (fluid) — tuned for Calibri (normal width, so slightly tighter top end) */
+  --step--1: clamp(0.8rem, 0.76rem + 0.18vw, 0.9rem);
+  --step-0: clamp(1rem, 0.95rem + 0.24vw, 1.1rem);
+  --step-1: clamp(1.25rem, 1.12rem + 0.55vw, 1.6rem);
+  --step-2: clamp(1.8rem, 1.45rem + 1.4vw, 2.7rem);
+  --step-3: clamp(2.1rem, 1.7rem + 2.2vw, 3.9rem);
+  --step-4: clamp(2.3rem, 1.8rem + 3.2vw, 5.2rem);
+  --step-5: clamp(2.9rem, 2rem + 5vw, 7rem);
 
   /* Layout */
   --container: 1200px;
@@ -93,22 +93,25 @@ body {
 h1,
 h2 {
   font-family: var(--font-display);
-  font-weight: 400;
-  line-height: 0.94;
-  letter-spacing: 0.005em;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.015em;
   text-transform: uppercase;
   margin: 0;
   text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 h3,
 h4 {
   font-family: var(--font-head);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.18;
+  letter-spacing: -0.005em;
   margin: 0;
   text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 p {
@@ -292,7 +295,7 @@ ul {
   font-weight: 500;
   background: var(--grad-soft);
   color: var(--green-deep);
-  border: 1px solid rgba(21, 195, 122, 0.22);
+  border: 1px solid rgba(244, 97, 4, 0.22);
 }
 
 /* ---------- Dark sections ---------- */
@@ -310,15 +313,17 @@ ul {
   border-color: var(--line-on-dark);
 }
 
-/* ---------- Scroll reveal (JS adds .is-in) ---------- */
-[data-reveal] {
+/* ---------- Scroll reveal (JS adds .is-in) ----------
+   Only hidden when JS is active (html.js), so content stays visible
+   without JavaScript or if the bundle fails to load. */
+.js [data-reveal] {
   opacity: 0;
   transform: translateY(26px);
   transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
-[data-reveal].is-in {
+.js [data-reveal].is-in {
   opacity: 1;
   transform: none;
 }
@@ -436,4 +441,84 @@ ul {
   height: 100%;
   object-fit: cover;
   filter: grayscale(0.85) contrast(1.05) brightness(0.8);
+}
+
+/* ---------- Illustration blocks (unDraw, brand-coloured) ---------- */
+/* Soft rounded panel that sits behind a flat illustration. */
+.illu-panel {
+  position: relative;
+  border-radius: var(--radius-lg);
+  background: var(--grad-soft);
+  border: 1px solid rgba(244, 97, 4, 0.14);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+.illu-panel::before {
+  /* subtle dotted texture */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(rgba(244, 97, 4, 0.12) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 75% 75% at 50% 45%, #000 30%, transparent 75%);
+}
+.illu-panel .illu {
+  width: 100%;
+  max-width: 460px;
+  filter: drop-shadow(0 24px 40px rgba(6, 17, 13, 0.14));
+}
+.illu-panel--dark {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--line-on-dark);
+}
+.illu-panel--dark::before {
+  background-image: radial-gradient(rgba(255, 154, 61, 0.14) 1.5px, transparent 1.5px);
+}
+
+/* Generic two-column "illustration + copy" split. */
+.split {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .split {
+    grid-template-columns: 1fr 1fr;
+  }
+  .split--media-first .split__media {
+    order: -1;
+  }
+}
+
+/* Small inline illustration (e.g. inside a card). */
+.illu--sm {
+  max-width: 180px;
+  margin-inline: auto;
+}
+
+/* Bulleted check list used beside illustrations. */
+.split__points {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+}
+.split__points li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  color: var(--muted);
+}
+.split__points svg {
+  color: var(--green-deep);
+  flex: none;
+}
+.dark .split__points li {
+  color: var(--muted-on-dark);
+}
+.dark .split__points svg {
+  color: var(--green-bright);
 }

@@ -66,13 +66,11 @@ const orgJsonLd = {
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap"
-    />
+    <!-- Flag JS early so scroll-reveal content hides before paint (and stays
+         visible if JS is disabled or fails). -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
 
     <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
   </head>

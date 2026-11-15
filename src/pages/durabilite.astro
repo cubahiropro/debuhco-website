@@ -4,6 +4,7 @@ import { url } from '../lib/path';
 import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Icon from '../components/Icon.astro';
+import Illustration from '../components/Illustration.astro';
 import { processSteps } from '../data/site';
 
 const pillars = [
@@ -42,8 +43,28 @@ const collectionCities = ['Bujumbura', 'Gitega', 'Ngozi', 'Rumonge'];
     text="Les déchets plastiques du Burundi sont aujourd'hui mal gérés. DEBUHCO structure une filière de collecte et de recyclage qui redonne de la valeur à ces bouteilles usagées."
   />
 
-  <!-- Pillars -->
+  <!-- Intro -->
   <section class="section">
+    <div class="container">
+      <div class="split">
+        <div class="split__media illu-panel" data-reveal>
+          <Illustration name="environment" label="Illustration d'un environnement préservé" />
+        </div>
+        <div class="split__copy" data-reveal style="--reveal-delay:120ms">
+          <SectionHeading eyebrow="Notre engagement" title="La durabilité n'est pas une option, c'est le modèle." max="22ch">
+            <p class="lead">
+              Chaque bouteille produite par DEBUHCO s'inscrit dans une boucle&nbsp;: collecter,
+              recycler, réutiliser. Nous transformons un problème de déchets en une ressource
+              industrielle, pour le Burundi et pour la planète.
+            </p>
+          </SectionHeading>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="section" style="padding-top:0">
     <div class="container">
       <div class="grid grid--2 pillars">
         {
@@ -74,6 +95,31 @@ const collectionCities = ['Bujumbura', 'Gitega', 'Ngozi', 'Rumonge'];
           ))
         }
       </ol>
+    </div>
+  </section>
+
+  <!-- Energy -->
+  <section class="section">
+    <div class="container">
+      <div class="split split--media-first">
+        <div class="split__media illu-panel" data-reveal>
+          <Illustration name="wind-turbine" label="Illustration d'énergie renouvelable" />
+        </div>
+        <div class="split__copy" data-reveal style="--reveal-delay:120ms">
+          <SectionHeading eyebrow="Énergie & climat" title="Produire plus propre, consommer moins." max="20ch">
+            <p class="lead">
+              Des machines à meilleure efficacité énergétique, l'étude d'une alimentation
+              solaire du site et l'optimisation des transports&nbsp;: autant de leviers pour
+              réduire l'empreinte carbone de chaque préforme.
+            </p>
+            <ul class="split__points">
+              <li><Icon name="sun" size={18} /> Étude d'une alimentation solaire du site</li>
+              <li><Icon name="zap" size={18} /> Équipements à haute efficacité énergétique</li>
+              <li><Icon name="leaf" size={18} /> Transports optimisés, émissions réduites</li>
+            </ul>
+          </SectionHeading>
+        </div>
+      </div>
     </div>
   </section>
 

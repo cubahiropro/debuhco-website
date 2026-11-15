@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { url } from '../lib/path';
 import PageHero from '../components/PageHero.astro';
 import Icon from '../components/Icon.astro';
+import Illustration from '../components/Illustration.astro';
 import { company } from '../data/site';
 ---
 
@@ -85,6 +86,9 @@ import { company } from '../data/site';
 
         <!-- Info -->
         <aside class="contact__info" data-reveal style="--reveal-delay:120ms">
+          <div class="contact__illu illu-panel">
+            <Illustration name="contact-us" label="Illustration d'une prise de contact" />
+          </div>
           <div class="info-card">
             <span class="info-card__icon"><Icon name="map-pin" size={20} /></span>
             <h3>Adresse</h3>
@@ -127,13 +131,15 @@ import { company } from '../data/site';
   }
   .field textarea { resize: vertical; }
   .field input:focus, .field select:focus, .field textarea:focus {
-    outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(21,195,122,0.15);
+    outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(244,97,4,0.18);
   }
   .form__submit { justify-content: center; margin-top: 0.4rem; }
   .form__note { color: var(--muted); font-size: 0.82rem; }
   @media (min-width: 560px) { .form__row { grid-template-columns: 1fr 1fr; } }
 
   .contact__info { display: grid; gap: 1rem; }
+  .contact__illu { padding: 1.4rem; }
+  .contact__illu .illu { max-width: 300px; }
   .info-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.3rem 1.5rem; }
   .info-card__icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--grad-soft); color: var(--green-deep); margin-bottom: 0.8rem; }
   .info-card h3 { font-size: 1rem; }
@@ -141,6 +147,6 @@ import { company } from '../data/site';
   .info-card a:hover { color: var(--green-deep); }
   .info-card--accent { background: var(--ink); color: var(--text-on-dark); border: 0; }
   .info-card--accent p { color: var(--muted-on-dark); }
-  .info-card--accent .info-card__icon { background: rgba(56,224,140,0.14); color: var(--green-bright); }
+  .info-card--accent .info-card__icon { background: rgba(255,154,61,0.16); color: var(--green-bright); }
   @media (min-width: 900px) { .contact { grid-template-columns: 1.4fr 0.9fr; } }
 </style>

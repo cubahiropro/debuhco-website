@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Icon from '../components/Icon.astro';
+import Illustration from '../components/Illustration.astro';
 import { company, markets } from '../data/site';
 
 const timeline = [
@@ -72,6 +73,9 @@ const values = [
               emplois et en soutenant l'autonomisation des jeunes et des groupes vulnérables.
             </p>
           </SectionHeading>
+          <div class="mission__art">
+            <Illustration name="goals" label="Illustration d'objectifs et d'ambitions partagés" />
+          </div>
         </div>
         <div class="identity card" data-reveal style="--reveal-delay:120ms">
           <h3 class="identity__h">Identité légale</h3>
@@ -140,6 +144,9 @@ const values = [
             {markets.map((m) => <li class="chip"><Icon name="map-pin" size={14} /> {m}</li>)}
           </ul>
         </div>
+        <div class="vision__art">
+          <Illustration name="around-the-world" label="Illustration d'une intégration régionale et mondiale" />
+        </div>
       </div>
     </div>
   </section>
@@ -162,6 +169,8 @@ const values = [
   .identity__list div:last-child { border-bottom: 0; padding-bottom: 0; }
   .identity__list dt { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-on-dark); }
   .identity__list dd { margin: 0; font-weight: 600; font-family: var(--font-display); }
+  .mission__art { margin-top: 2rem; max-width: 340px; }
+  .mission__art .illu { color: var(--green-bright); }
   @media (min-width: 900px) { .mission { grid-template-columns: 1.1fr 0.9fr; } }
 
   .values { margin-top: 3rem; }
@@ -177,9 +186,12 @@ const values = [
   .timeline__text { margin-top: 0.3rem; color: var(--muted-on-dark); font-size: 0.93rem; }
   @media (min-width: 760px) { .timeline { grid-template-columns: 1fr 1fr; gap: 1.4rem 2.4rem; } }
 
-  .vision { background: var(--ink); color: var(--text-on-dark); border: 0; overflow: hidden; position: relative; }
+  .vision { background: var(--ink); color: var(--text-on-dark); border: 0; overflow: hidden; position: relative; display: grid; gap: 2.4rem; align-items: center; }
   .vision .eyebrow { color: var(--green-bright); }
   .vision__title { font-size: var(--step-2); margin-top: 1rem; max-width: 24ch; }
   .vision__text { color: var(--muted-on-dark); margin-top: 1rem; max-width: 62ch; }
   .vision__markets { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem; }
+  .vision__art { max-width: 420px; margin-inline: auto; width: 100%; }
+  .vision__art .illu { color: var(--green-bright); max-width: 380px; }
+  @media (min-width: 880px) { .vision { grid-template-columns: 1.3fr 0.7fr; } }
 </style>

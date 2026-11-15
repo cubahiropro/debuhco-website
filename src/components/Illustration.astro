@@ -1,0 +1,49 @@
+---
+/**
+ * Illustration — inlines an unDraw SVG so its `currentColor` accent
+ * inherits the brand colour (set via CSS `color`, default brand orange).
+ *
+ * unDraw illustrations by Katerina Limpitsouni — https://undraw.co (MIT).
+ * Using <img> would NOT inherit currentColor, so we inline the markup.
+ */
+const svgs = import.meta.glob('../assets/undraw/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
+
+interface Props {
+  name: string;
+  label?: string; // accessible name; omit for decorative
+  class?: string;
+}
+const { name, label, class: cls = '' } = Astro.props;
+
+const entry = Object.entries(svgs).find(([p]) => p.endsWith(`/${name}.svg`));
+let raw = entry ? entry[1] : '';
+
+// Make it fluid & theme-able: drop fixed width/height, normalise the root tag.
+raw = raw
+  .replace(/<\?xml[\s\S]*?\?>/i, '')
+  .replace(/<svg([^>]*?)\swidth="[^"]*"/i, '<svg$1')
+  .replace(/<svg([^>]*?)\sheight="[^"]*"/i, '<svg$1');
+
+const a11y = label
+  ? `role="img" aria-label="${label}"`
+  : 'role="presentation" aria-hidden="true"';
+---
+
+<span class:list={['illu', cls]} set:html={raw ? raw.replace('<svg', `<svg ${a11y}`) : ''} />
+
+<style>
+  .illu {
+    display: block;
+    color: var(--green); /* drives every currentColor accent */
+  }
+  .illu :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+</style>
