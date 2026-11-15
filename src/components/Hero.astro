@@ -2,13 +2,28 @@
 import Icon from './Icon.astro';
 import { company } from '../data/site';
 import { url } from '../lib/path';
+
+const slides = [
+  { src: '/images/injection.jpg', alt: 'Ligne de production industrielle' },
+  { src: '/images/preforms.jpg', alt: 'Préformes PET injectées' },
+  { src: '/images/granules.jpg', alt: 'Granulés de PET' },
+];
 ---
 
 <section class="hero dark" data-hero>
   <div class="hero__bg" aria-hidden="true">
+    <div class="hero__slides" data-hero-slides>
+      {
+        slides.map((s, i) => (
+          <div
+            class:list={['hero__slide', { 'is-active': i === 0 }]}
+            style={`background-image:url(${url(s.src)})`}
+          />
+        ))
+      }
+    </div>
+    <div class="hero__overlay"></div>
     <div class="hero__aurora"></div>
-    <div class="hero__glow hero__glow--1" data-parallax="-18"></div>
-    <div class="hero__glow hero__glow--2" data-parallax="22"></div>
     <div class="hero__grid"></div>
     <div class="hero__spotlight"></div>
     <div class="hero__grain"></div>
@@ -62,57 +77,9 @@ import { url } from '../lib/path';
       </dl>
     </div>
 
-    <div class="hero__art" data-hero-art>
-      <div class="hero__art-ring" aria-hidden="true"></div>
-      <div class="hero__orbit" aria-hidden="true"></div>
-      <span class="hero__dot hero__dot--1" aria-hidden="true"></span>
-      <span class="hero__dot hero__dot--2" aria-hidden="true"></span>
-      <span class="hero__dot hero__dot--3" aria-hidden="true"></span>
-      <svg class="hero__bottle" viewBox="0 0 220 420" role="img"
-        aria-label="Illustration d'une bouteille PET et d'un cycle de recyclage">
-        <defs>
-          <linearGradient id="bottleFill" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#ff9a3d" stop-opacity="0.95" />
-            <stop offset="1" stop-color="#f46104" stop-opacity="0.95" />
-          </linearGradient>
-          <linearGradient id="liquid" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#ff9a3d" stop-opacity="0.3" />
-            <stop offset="1" stop-color="#f46104" stop-opacity="0.55" />
-          </linearGradient>
-        </defs>
-
-        <!-- bottle body -->
-        <path
-          d="M86 70 h48 v16 c0 10 10 14 10 30 v250 c0 24 -14 38 -34 38 h0
-             c-20 0 -34 -14 -34 -38 V116 c0 -16 10 -20 10 -30 Z"
-          fill="none" stroke="url(#bottleFill)" stroke-width="3" />
-        <!-- liquid -->
-        <path
-          d="M72 210 v194 c0 24 14 38 34 38 h8 c20 0 34 -14 34 -38 V210 Z"
-          fill="url(#liquid)" opacity="0.55" />
-        <!-- cap -->
-        <rect x="90" y="40" width="40" height="30" rx="7"
-          fill="url(#bottleFill)" />
-        <rect x="90" y="40" width="40" height="8" rx="4" fill="#06110d" opacity="0.25" />
-        <!-- ribs -->
-        <g stroke="url(#bottleFill)" stroke-width="2" opacity="0.5">
-          <line x1="80" y1="250" x2="140" y2="250" />
-          <line x1="80" y1="266" x2="140" y2="266" />
-          <line x1="80" y1="282" x2="140" y2="282" />
-        </g>
-      </svg>
-
-      <!-- floating preform -->
-      <svg class="hero__preform" viewBox="0 0 60 120" aria-hidden="true">
-        <rect x="18" y="4" width="24" height="18" rx="5" fill="#ff9a3d" />
-        <path d="M20 22 h20 v70 c0 12 -4 24 -10 24 s-10 -12 -10 -24 Z"
-          fill="none" stroke="#f46104" stroke-width="2.6" />
-      </svg>
-
-      <!-- recycle badge -->
-      <div class="hero__rec" aria-hidden="true">
-        <Icon name="recycle" size={30} />
-      </div>
+    <!-- Slide indicators -->
+    <div class="hero__dots" data-hero-dots aria-hidden="true">
+      {slides.map((_, i) => <button class:list={['hero__dotbtn', { 'is-active': i === 0 }]} data-slide={i} type="button" tabindex="-1" />)}
     </div>
   </div>
 
@@ -136,20 +103,55 @@ import { url } from '../lib/path';
     inset: 0;
     z-index: -1;
     overflow: hidden;
+    background: var(--ink);
+  }
+
+  /* Photo slideshow */
+  .hero__slides {
+    position: absolute;
+    inset: 0;
+  }
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.06);
+    filter: grayscale(0.35) contrast(1.05) brightness(0.62) saturate(1.05);
+    transition: opacity 1.4s var(--ease);
+    will-change: opacity, transform;
+  }
+  .hero__slide.is-active {
+    opacity: 1;
+    animation: kenburns 7.5s ease-out forwards;
+  }
+  @keyframes kenburns {
+    from { transform: scale(1.02); }
+    to { transform: scale(1.12); }
+  }
+  /* Warm duotone wash + readability gradient */
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(10, 10, 12, 0.94) 0%, rgba(10, 10, 12, 0.78) 42%, rgba(10, 10, 12, 0.42) 100%),
+      linear-gradient(0deg, rgba(10, 10, 12, 0.95) 2%, rgba(10, 10, 12, 0.1) 55%),
+      linear-gradient(120deg, rgba(244, 97, 4, 0.22), transparent 60%);
   }
   .hero__aurora {
     position: absolute;
     inset: -25%;
     background:
-      radial-gradient(38% 40% at 20% 28%, rgba(244, 97, 4, 0.42), transparent 60%),
-      radial-gradient(42% 42% at 82% 18%, rgba(255, 154, 61, 0.34), transparent 60%),
-      radial-gradient(40% 48% at 62% 82%, rgba(244, 97, 4, 0.28), transparent 62%);
+      radial-gradient(40% 44% at 82% 16%, rgba(255, 154, 61, 0.3), transparent 60%),
+      radial-gradient(42% 48% at 18% 86%, rgba(244, 97, 4, 0.26), transparent 62%);
     filter: blur(44px);
     animation: aurora 22s ease-in-out infinite alternate;
+    mix-blend-mode: screen;
   }
   @keyframes aurora {
-    0% { transform: translate3d(-3%, -2%, 0) scale(1) rotate(0deg); }
-    100% { transform: translate3d(4%, 3%, 0) scale(1.12) rotate(8deg); }
+    0% { transform: translate3d(-3%, -2%, 0) scale(1); }
+    100% { transform: translate3d(4%, 3%, 0) scale(1.12); }
   }
   .hero__grain {
     position: absolute;
@@ -162,56 +164,32 @@ import { url } from '../lib/path';
   .hero__grid {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 54px 54px;
-    mask-image: radial-gradient(ellipse 80% 70% at 60% 30%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 100%);
   }
-  .hero__glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(70px);
-    opacity: 0.5;
-  }
-  .hero__glow--1 {
-    width: 520px;
-    height: 520px;
-    top: -160px;
-    right: -80px;
-    background: radial-gradient(circle, rgba(244, 97, 4, 0.5), transparent 70%);
-    animation: glowpulse 8s ease-in-out infinite;
-  }
-  .hero__glow--2 {
-    width: 420px;
-    height: 420px;
-    bottom: -140px;
-    left: -100px;
-    background: radial-gradient(circle, rgba(255, 154, 61, 0.38), transparent 70%);
-    animation: glowpulse 10s ease-in-out infinite 1s;
-  }
-  @keyframes glowpulse {
-    50% { opacity: 0.78; }
-  }
-
   .hero__spotlight {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle 440px at var(--mx, 72%) var(--my, 32%), rgba(244, 97, 4, 0.2), transparent 55%);
+    background: radial-gradient(circle 440px at var(--mx, 70%) var(--my, 36%), rgba(244, 97, 4, 0.16), transparent 55%);
     transition: background 0.18s linear;
   }
 
   .hero__inner {
+    position: relative;
     display: grid;
     gap: 2rem;
     align-items: center;
     grid-template-columns: 1fr;
     width: 100%;
   }
+  .hero__copy {
+    max-width: 44rem;
+  }
 
   /* Rotating keyword */
-  .hero__line--rotate {
-    overflow: visible;
-  }
+  .hero__line--rotate { overflow: visible; }
   .hero__rotator {
     position: relative;
     display: inline-block;
@@ -230,39 +208,32 @@ import { url } from '../lib/path';
     transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
     will-change: transform, opacity;
   }
-  .hero__rot.is-active {
-    opacity: 1;
-    transform: none;
-  }
-  .hero__rot.is-out {
-    opacity: 0;
-    transform: translateY(-0.55em);
-  }
+  .hero__rot.is-active { opacity: 1; transform: none; }
+  .hero__rot.is-out { opacity: 0; transform: translateY(-0.55em); }
+
   .hero__chip {
-    background: rgba(255, 125, 26, 0.14);
+    background: rgba(255, 125, 26, 0.16);
     color: var(--green-bright);
-    border-color: rgba(255, 125, 26, 0.32);
+    border-color: rgba(255, 125, 26, 0.38);
+    backdrop-filter: blur(4px);
   }
   .hero__title {
     font-size: var(--step-5);
     margin-top: 1.4rem;
     font-weight: 800;
     hyphens: none;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35);
   }
   .hero__line {
     display: block;
     overflow: hidden;
     padding-block: 0.04em;
   }
-  .hero__line > span {
-    display: block;
-  }
-  .hero__title em {
-    font-style: normal;
-  }
+  .hero__line > span { display: block; }
   .hero__sub {
     margin-top: 1.6rem;
-    color: var(--muted-on-dark);
+    color: var(--text-on-dark);
+    opacity: 0.86;
   }
   .hero__cta {
     display: flex;
@@ -273,7 +244,7 @@ import { url } from '../lib/path';
   .hero__badges {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.8rem 2.4rem;
+    gap: 1.6rem 2.4rem;
     margin: 2.6rem 0 0;
     padding-top: 1.8rem;
     border-top: 1px solid var(--line-on-dark);
@@ -281,7 +252,7 @@ import { url } from '../lib/path';
   .hero__badge dt {
     font-family: var(--font-display);
     font-size: 1.7rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.02em;
   }
   .hero__badge dd {
@@ -290,88 +261,23 @@ import { url } from '../lib/path';
     font-size: 0.9rem;
   }
 
-  /* art */
-  .hero__art {
-    position: relative;
-    display: grid;
-    place-items: center;
-    min-height: 360px;
+  /* Slide indicators */
+  .hero__dots {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
   }
-  .hero__art-ring {
-    position: absolute;
-    width: min(360px, 78%);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: conic-gradient(from 120deg, rgba(244, 97, 4, 0.28), rgba(255, 154, 61, 0.28), rgba(244, 97, 4, 0.28));
-    filter: blur(4px);
-    animation: spin 26s linear infinite;
+  .hero__dotbtn {
+    width: 34px;
+    height: 4px;
+    border: 0;
+    padding: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    cursor: default;
+    transition: background 0.4s var(--ease);
   }
-  .hero__art-ring::after {
-    content: '';
-    position: absolute;
-    inset: 14%;
-    border-radius: 50%;
-    background: var(--ink);
-  }
-  .hero__orbit {
-    position: absolute;
-    width: min(440px, 94%);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    border: 1px dashed rgba(255, 154, 61, 0.35);
-    animation: spin 42s linear infinite reverse;
-  }
-  .hero__orbit::after {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: 50%;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: var(--green-bright);
-    box-shadow: 0 0 16px rgba(255, 154, 61, 0.9);
-    transform: translateX(-50%);
-  }
-  .hero__dot {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--grad);
-    box-shadow: 0 0 16px rgba(244, 97, 4, 0.6);
-  }
-  .hero__dot--1 { top: 16%; left: 14%; animation: float 5s ease-in-out infinite; }
-  .hero__dot--2 { bottom: 20%; right: 12%; width: 7px; height: 7px; animation: float 6s ease-in-out infinite 0.5s; }
-  .hero__dot--3 { top: 52%; right: 4%; width: 5px; height: 5px; animation: float 4.5s ease-in-out infinite 0.8s; }
-  .hero__bottle {
-    position: relative;
-    width: clamp(160px, 42vw, 230px);
-    filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.4));
-    animation: float 6s ease-in-out infinite;
-  }
-  .hero__preform {
-    position: absolute;
-    width: 52px;
-    right: 12%;
-    top: 12%;
-    animation: float 5s ease-in-out infinite 0.6s;
-    filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.35));
-  }
-  .hero__rec {
-    position: absolute;
-    left: 8%;
-    bottom: 14%;
-    display: grid;
-    place-items: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 16px;
-    color: #06110d;
-    background: var(--grad);
-    box-shadow: var(--shadow-lg);
-    animation: float 5.4s ease-in-out infinite 0.3s;
-  }
+  .hero__dotbtn.is-active { background: var(--green-bright); }
 
   .hero__scroll {
     position: absolute;
@@ -385,6 +291,7 @@ import { url } from '../lib/path';
     display: grid;
     justify-items: center;
     padding-top: 7px;
+    z-index: 2;
   }
   .hero__scroll span {
     width: 4px;
@@ -393,28 +300,18 @@ import { url } from '../lib/path';
     background: var(--green-bright);
     animation: scroll 1.8s ease-in-out infinite;
   }
-
-  @keyframes float {
-    50% { transform: translateY(-14px); }
-  }
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
   @keyframes scroll {
     0% { opacity: 0; transform: translateY(-4px); }
     40% { opacity: 1; }
     80% { opacity: 0; transform: translateY(10px); }
   }
+
   @media (prefers-reduced-motion: reduce) {
-    .hero__bottle, .hero__preform, .hero__rec, .hero__art-ring, .hero__scroll span,
-    .hero__aurora, .hero__glow--1, .hero__glow--2, .hero__orbit, .hero__dot { animation: none; }
+    .hero__slide.is-active, .hero__aurora, .hero__scroll span { animation: none; }
+    .hero__slide { transition: opacity 0.4s linear; transform: none; }
   }
 
   @media (min-width: 900px) {
-    .hero__inner {
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 3rem;
-    }
-    .hero__art { min-height: 520px; }
+    .hero__dots { position: absolute; right: 0; bottom: 0; }
   }
 </style>

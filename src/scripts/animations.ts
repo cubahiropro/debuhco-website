@@ -173,6 +173,49 @@ function initHeroInteractions() {
   });
 }
 
+/** Hero: crossfading photo slideshow with synced indicators. */
+function initHeroSlides() {
+  const wrap = document.querySelector<HTMLElement>('[data-hero-slides]');
+  if (!wrap) return;
+  const slides = Array.from(wrap.querySelectorAll<HTMLElement>('.hero__slide'));
+  const dots = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-dots] .hero__dotbtn'));
+  if (slides.length < 2) return;
+  let i = 0;
+  window.setInterval(() => {
+    slides[i].classList.remove('is-active');
+    dots[i]?.classList.remove('is-active');
+    i = (i + 1) % slides.length;
+    slides[i].classList.add('is-active');
+    dots[i]?.classList.add('is-active');
+  }, 5000);
+}
+
+/** Hero background drifts slower than the page for depth. */
+function initHeroParallax() {
+  const slides = document.querySelector<HTMLElement>('[data-hero-slides]');
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (!slides || !hero) return;
+  gsap.to(slides, {
+    yPercent: 14,
+    ease: 'none',
+    scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
+  });
+}
+
+/** Thin progress bar that tracks page scroll. */
+function initScrollProgress() {
+  const bar = document.querySelector<HTMLElement>('[data-scroll-progress]');
+  if (!bar) return;
+  const update = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    bar.style.transform = `scaleX(${max > 0 ? h.scrollTop / max : 0})`;
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+}
+
 /** Big headings that wipe up behind a mask when scrolled into view. */
 function initHeadingWipe() {
   gsap.utils.toArray<HTMLElement>('[data-wipe]').forEach((el) => {
@@ -186,6 +229,8 @@ function initHeadingWipe() {
 }
 
 function boot() {
+  initScrollProgress();
+
   if (prefersReduced) {
     revealAll();
     document
@@ -196,6 +241,8 @@ function boot() {
 
   gsap.registerPlugin(ScrollTrigger);
   initHero();
+  initHeroSlides();
+  initHeroParallax();
   initReveal();
   initParallax();
   animateCounters();
